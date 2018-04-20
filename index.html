@@ -9,20 +9,72 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 <body>
-<header class="bg-light p-2">
-    <h3>To-Do App</h3>
-</header>
+    <!--header-->
+    <header class="bg-light p-2">
+        <h3>To-Do List</h3>
+    </header>
+    <!--./header-->
 
-<main class="border p-2 text-center">
-    Start
-</main>
+    <!--main-->
+    <main class="border p-2 text-center">
+        <!--add event-->
+        <input type="text" id="new-event" placeholder="add event" />
+        <button id="btn-add-event">Add</button>
+        <!--./add event-->
 
-<footer class="bg-light p-2">
-    <h4>&copy; Sample Project</h4>
-</footer>
+        <!--show events-->
+        <ul id="events">
+        </ul>
+        <!--./show events-->
+    </main>
+    <!--./header-->
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <!--footer-->
+    <footer class="bg-light p-2">
+        <h4>&copy; Sample Project</h4>
+    </footer>
+    <!--./footer-->
+
+    <script type="text/javascript" src="events.js">
+        // making an events array
+        var events = [];
+
+        // making an event class/constructor
+        function Event(detail) {
+            this.detail = detail;
+        }
+
+        // add a new event
+        function addEvent(detail) {
+            var event = new Event(detail);
+            events.push(event);
+        }
+
+        // render events list
+        function renderEvents() {
+            var eventsList = document.getElementById('events');
+            eventsList.innerHTML = '';
+            for (i = 0; i < events.length; i++) {
+                var event = document.createElement('li');
+                event.innerHTML = events[i].detail;
+                eventsList.appendChild(event);
+            }
+        }
+
+        // onclick event listener for adding an event
+        var btnAddEvent = document.getElementById('btn-add-event');
+        btnAddEvent.onclick = function() {
+            // make a new event
+            var newEvent = document.getElementById('new-event');
+            // add it to the events array
+            addEvent(newEvent.value);
+
+            // re-render list of events
+            renderEvents();
+
+            // empty input field
+            document.getElementById('new-event').value = '';
+        }
+    </script>
 </body>
 </html>
