@@ -1,17 +1,41 @@
-// making an events array
+// pick events from localStorage
+// otherwise let the events array be empty
+var storedEvents = localStorage.getItem("events");
 var events = [];
+if (storedEvents) {
+    arrayData = JSON.parse(storedEvents);
 
-// making an event class/constructor
+    // restore storedEvents into 'events' stored in this 'window'
+    for (i = 0; i < arrayData.length; i++) {
+        addEvent(arrayData[i].detail);
+    }
+    // render events on page
+    renderEvents();
+}
+
+/*
+ * Making an Event Class.
+ *
+ * String  detail
+ */
 function Event(detail) {
     this.detail = detail;
 }
 
-// add a new event
+/*
+ * Add detail to an Event.
+ *
+ * String  detail
+ */
 function addEvent(detail) {
     // if detail is not empty
     if (detail !== '') {
         var event = new Event(detail);
         events.push(event);
+
+        // store to localStorage
+        localStorage.clear();
+        localStorage.setItem("events", JSON.stringify(events));
         return true;
     }
 
@@ -19,7 +43,10 @@ function addEvent(detail) {
     return false;
 }
 
-// render events list
+/*
+ * Render events on page.
+ *
+ */
 function renderEvents() {
     // get events list
     var eventsList = document.getElementById('events');
@@ -40,6 +67,7 @@ function renderEvents() {
         // adding event listener for remove button
         btnDelete.onclick = function() {
             events.splice(this.getAttribute('data-event-index'), 1);
+            localStorage.setItem("events", JSON.stringify(events));
             renderEvents();
         };
 
@@ -49,7 +77,11 @@ function renderEvents() {
     }
 }
 
-// onclick event listener for adding an event
+/*
+ * Event listener for adding an event.
+ *
+ * String  detail
+ */
 var btnAddEvent = document.getElementById('btn-add-event');
 btnAddEvent.onclick = function() {
     // make a new event
