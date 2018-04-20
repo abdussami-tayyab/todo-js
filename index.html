@@ -7,74 +7,54 @@
     <title>To-do List</title>
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style type="text/css">
+        .btn-delete {
+            text-decoration: underline;
+            float: right;
+        }
+        .btn-delete:hover {
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <!--header-->
-    <header class="bg-light p-2">
+    <header class="bg-light p-3">
         <h3>To-Do List</h3>
     </header>
     <!--./header-->
 
     <!--main-->
-    <main class="border p-2 text-center">
-        <!--add event-->
-        <input type="text" id="new-event" placeholder="add event" />
-        <button id="btn-add-event">Add</button>
-        <!--./add event-->
+    <main class="container p-2">
+        <div class="row">
+            <div class="col-6">
+                <!--add event-->
+                <h5>Add Event</h5>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="new-event" placeholder="add event" autofocus />
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" id="btn-add-event">Add</button>
+                    </div>
+                </div>
+                <!--./add event-->
 
-        <!--show events-->
-        <ul id="events">
-        </ul>
-        <!--./show events-->
+                <!--show events-->
+                <h5 class="mt-4">Events List</h5>
+                <ul class="list-group" id="events">
+                    <li class="list-group-item list-group-item-warning">No events</li>
+                </ul>
+                <!--./show events-->
+            </div>
+        </div>
     </main>
     <!--./header-->
 
     <!--footer-->
-    <footer class="bg-light p-2">
+    <footer class="bg-light p-3">
         <h4>&copy; Sample Project</h4>
     </footer>
     <!--./footer-->
 
-    <script type="text/javascript" src="events.js">
-        // making an events array
-        var events = [];
-
-        // making an event class/constructor
-        function Event(detail) {
-            this.detail = detail;
-        }
-
-        // add a new event
-        function addEvent(detail) {
-            var event = new Event(detail);
-            events.push(event);
-        }
-
-        // render events list
-        function renderEvents() {
-            var eventsList = document.getElementById('events');
-            eventsList.innerHTML = '';
-            for (i = 0; i < events.length; i++) {
-                var event = document.createElement('li');
-                event.innerHTML = events[i].detail;
-                eventsList.appendChild(event);
-            }
-        }
-
-        // onclick event listener for adding an event
-        var btnAddEvent = document.getElementById('btn-add-event');
-        btnAddEvent.onclick = function() {
-            // make a new event
-            var newEvent = document.getElementById('new-event');
-            // add it to the events array
-            addEvent(newEvent.value);
-
-            // re-render list of events
-            renderEvents();
-
-            // empty input field
-            document.getElementById('new-event').value = '';
-        }
-    </script>
+    <script type="text/javascript" src="js/events.js"></script>
 </body>
 </html>
