@@ -7,7 +7,7 @@ if (storedEvents) {
 
     // restore storedEvents into 'events' stored in this 'window'
     for (i = 0; i < arrayData.length; i++) {
-        addEvent(arrayData[i].detail);
+        addEvent(arrayData[i].title, arrayData[i].descripton, arrayData[i].createdOn);
     }
     // render events on page
     renderEvents();
@@ -16,21 +16,27 @@ if (storedEvents) {
 /*
  * Making an Event Class.
  *
- * String  detail
+ * String  title
+ * String  description
+ * String  createdOn (date)
  */
-function Event(detail) {
-    this.detail = detail;
+function Event(title, description, createdOn) {
+    this.title = title;
+    this.descripton = description;
+    this.createdOn = createdOn;
 }
 
 /*
  * Add detail to an Event.
  *
- * String  detail
+ * String  title
+ * String  description
+ * String  createdOn (date)
  */
-function addEvent(detail) {
-    // if detail is not empty
-    if (detail !== '') {
-        var event = new Event(detail);
+function addEvent(title, description, createdOn) {
+    // if title is not empty
+    if (title !== '') {
+        var event = new Event(title, description, createdOn);
         events.push(event);
 
         // store to localStorage
@@ -41,6 +47,16 @@ function addEvent(detail) {
 
     // if detail is empty, return false
     return false;
+}
+
+/*
+ * Remove an Event.
+ *
+ * Array    events
+ * Integer  index
+ */
+function deleteEvent(events, deleteIndex) {
+    events.splice(deleteIndex, 1);
 }
 
 /*
@@ -56,7 +72,7 @@ function renderEvents() {
     for (i = 0; i < events.length; i++) {
         // adding event
         var event = document.createElement('li');
-        event.innerHTML = events[i].detail;
+        event.innerHTML = events[i].title;
         event.className = 'list-group-item';
 
         // adding remove button to event
@@ -66,7 +82,7 @@ function renderEvents() {
         btnDelete.setAttribute('data-event-index', i);
         // adding event listener for remove button
         btnDelete.onclick = function() {
-            events.splice(this.getAttribute('data-event-index'), 1);
+            deleteEvent(events, this.getAttribute('data-event-index'));
             localStorage.setItem("events", JSON.stringify(events));
             renderEvents();
         };
@@ -79,15 +95,19 @@ function renderEvents() {
 
 /*
  * Event listener for adding an event.
- *
- * String  detail
  */
 var btnAddEvent = document.getElementById('btn-add-event');
 btnAddEvent.onclick = function() {
     // make a new event
-    var newEvent = document.getElementById('new-event');
+    // get title
+    var newTitle = document.getElementById('new-title');
+    // get description
+    var newDescription = document.getElementById('new-description');
+    // get createdOn date
+    var createdOn = document.getElementById('created-on');
+
     // add it to the events array
-    if (! addEvent(newEvent.value)) {
+    if (! addEvent(newTitle.value, newDescription.value, createdOn.value)) {
         alert('An event should have some detail, please try again :)');
     }
 
@@ -95,5 +115,6 @@ btnAddEvent.onclick = function() {
     renderEvents();
 
     // empty input field
-    document.getElementById('new-event').value = '';
+    document.getElementById('new-title').value = '';
+    document.getElementById('new-description').value = '';
 };

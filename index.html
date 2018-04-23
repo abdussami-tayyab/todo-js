@@ -7,7 +7,20 @@
     <title>To-do List</title>
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="css/index.css">
+
+    <!-- for datepicker -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function() {
+            $("#created-on").datepicker({
+                minDate: 0
+            });
+        });
+    </script>
+    <!-- ./for datepicker -->
 </head>
 <body>
     <!--header-->
@@ -20,14 +33,15 @@
     <main class="container p-2 mt-4">
         <div class="row">
             <div class="col-6">
-                <!--add event-->
-                <h5>Add Event</h5>
-                <div class="input-group">
-                    <input type="text" class="form-control" id="new-event" placeholder="add event" autofocus />
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" id="btn-add-event">Add</button>
-                    </div>
-                </div>
+                <!--add new event-->
+                <h5>Add New Event</h5>
+                <input type="text" class="form-control" id="new-title" placeholder="add event title" autofocus />
+                <br />
+                <textarea type="text" class="form-control" id="new-description" placeholder="add event description"></textarea>
+                <br />
+                <p>Date: <input type="text" id="created-on"></p>
+
+                <button class="btn btn-primary" id="btn-add-event">Add</button>
                 <!--./add event-->
 
                 <!--show events-->
